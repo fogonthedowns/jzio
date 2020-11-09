@@ -1,0 +1,4 @@
+MAILTO=eng@jzio.us
+PATH=/usr/local/bin:/usr/bin:/bin
+0 22 * * * srvenv :market-daily-balance env TAG=cron ./bin/daily-gold-price
+5 22 * * * srvenv :market-daily-balance env TAG=cron ./bin/daily-balance

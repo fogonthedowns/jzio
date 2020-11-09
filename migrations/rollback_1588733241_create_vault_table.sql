@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS `vaults`;
+DROP TABLE IF EXISTS `deposits`;
+DROP DATABASE IF EXISTS `market`;
