@@ -4,7 +4,7 @@
 
 layout: home
 title: jz.io
-background: '/img/bb.jpg'
+background: '/img/art.png'
 pagination: 
   enabled: true
 ---
