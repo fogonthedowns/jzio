@@ -1,0 +1,29 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/Users/justinzollars/hack/html/jzio/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	/787811b6/
+.center	styles.css	/^.center {$/;"	c
+.colored	styles.css	/^.colored {$/;"	c
+.otro	styles.css	/^.otro {$/;"	c
+2019	index.html	/^        <h4 id="2019">2019<\/h4>$/;"	I
+2020	index.html	/^        <h4 id="2020">2020<\/h4>$/;"	I
+2021	index.html	/^        <h4 id="2021">2021<\/h4>$/;"	I
+2022	index.html	/^        <h4 id="2022">2022<\/h4>$/;"	I
+2023	index.html	/^        <h4 id="2023">2023<\/h4>$/;"	I
+2024	index.html	/^        <h4 id="2024">2024<\/h4>$/;"	I
+2025	index.html	/^        <h4 id="2025">2025<\/h4>$/;"	I
+Justin Zollars	index.html	/^  <title>Justin Zollars<\/title>$/;"	j
+about-jz	index.html	/^        <h4 id="about-jz">About JZ<\/h4>$/;"	I
+deploy	Makefile	/^deploy:$/;"	t
+help	Makefile	/^help:$/;"	t
+investment	index.html	/^        <h4 id="investment">Investment<\/h4>$/;"	I
+start	Makefile	/^start:$/;"	t
+startup	index.html	/^        <h4 id="startup">Startup<\/h4>$/;"	I
+tech	index.html	/^        <h4 id="tech">Tech<\/h4>$/;"	I
