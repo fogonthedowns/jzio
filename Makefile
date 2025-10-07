@@ -6,7 +6,7 @@ help:
 	@echo "  start       starts npm server"
 
 deploy:
-	aws s3 sync ./ s3://jz.io/ --acl public-read
+	aws s3 sync ./ s3://jz.io/ --acl public-read --exclude ".git/*"
 	aws cloudfront create-invalidation --distribution-id E9KIROWWL1OJ2 --paths "/*"
 
 start:
