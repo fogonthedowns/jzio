@@ -1,5 +1,17 @@
 # General
 .DS_Store
+
+# CDK
+infra/node_modules/
+infra/dist/
+infra/cdk.out/
+
+# Python
+infra/.venv/
+infra/__pycache__/
+infra/stacks/__pycache__/
+**/__pycache__/
+*.pyc
 .config
 .jz
 cli
