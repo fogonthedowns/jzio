@@ -36,10 +36,7 @@ class PipelineStack(cdk.Stack):
                 input=source,
                 commands=[
                     "npm install -g aws-cdk",
-                    "cd infra",
-                    "python3 -m venv .venv",
-                    ".venv/bin/pip install -q -r requirements.txt",
-                    "cdk synth",
+                    "cd infra && python3 -m venv .venv && .venv/bin/pip install -q -r requirements.txt && cdk synth",
                 ],
                 primary_output_directory="infra/cdk.out",
             ),
