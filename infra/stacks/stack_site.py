@@ -11,32 +11,39 @@ from constructs import Construct
 
 
 class SiteStack(cdk.Stack):
-    """Stack C — ACM certificate, S3 bucket, CloudFront distribution, site DNS records.
+    """S3 bucket, CloudFront distribution, and site DNS records — deployed to us-west-2.
 
-    Depends on DnsStack (cert DNS validation requires the hosted zone to exist and
-    the registrar NS records to be pointing at Route53).
+    Certificate lives in CertStack (us-east-1) because CloudFront requires it there.
+
+    When called from the pipeline, hosted_zone and certificate are omitted and
+    imported by reference using HOSTED_ZONE_ID / CERT_ARN from config.py.
+    When called from app.py for manual deploys, pass the live CDK objects.
     """
 
     def __init__(
         self,
         scope: Construct,
         id: str,
-        hosted_zone: route53.IHostedZone,
+        hosted_zone: Optional[route53.IHostedZone] = None,
+        certificate: Optional[acm.ICertificate] = None,
         site_bucket_name: Optional[str] = None,
         **kwargs,
     ):
         super().__init__(scope, id, **kwargs)
 
+        if hosted_zone is None:
+            from config import DOMAIN, HOSTED_ZONE_ID
+            hosted_zone = route53.HostedZone.from_hosted_zone_attributes(
+                self, "ImportedZone",
+                hosted_zone_id=HOSTED_ZONE_ID,
+                zone_name=DOMAIN,
+            )
+        if certificate is None:
+            from config import CERT_ARN
+            certificate = acm.Certificate.from_certificate_arn(self, "ImportedCert", CERT_ARN)
+
         domain = hosted_zone.zone_name
         www_domain = f"www.{domain}"
-
-        # ── ACM certificate ───────────────────────────────────────────────────
-        certificate = acm.Certificate(
-            self, "SiteCert",
-            domain_name=domain,
-            subject_alternative_names=[f"*.{domain}"],
-            validation=acm.CertificateValidation.from_dns(hosted_zone),
-        )
 
         # ── S3 bucket ─────────────────────────────────────────────────────────
         self.site_bucket = s3.Bucket(
@@ -61,7 +68,7 @@ class SiteStack(cdk.Stack):
                 compress=True,
             ),
             domain_names=[domain, www_domain],
-            certificate=certificate,
+            certificate=certificate,  # from CertStack (us-east-1)
             default_root_object="index.html",
             error_responses=[
                 cloudfront.ErrorResponse(
@@ -92,10 +99,14 @@ class SiteStack(cdk.Stack):
         route53.AaaaRecord(self, "WwwAAAA", zone=hosted_zone, record_name="www", target=cf_target)
 
         # ── Outputs ───────────────────────────────────────────────────────────
-        cdk.CfnOutput(self, "SiteBucketName", value=self.site_bucket.bucket_name,
-                      description="S3 bucket for site content")
-        cdk.CfnOutput(self, "CloudFrontDistributionId", value=self.distribution.distribution_id,
-                      description="CloudFront distribution ID for cache invalidation")
+        self.bucket_name_cfn_output = cdk.CfnOutput(
+            self, "SiteBucketName", value=self.site_bucket.bucket_name,
+            description="S3 bucket for site content",
+        )
+        self.distribution_id_cfn_output = cdk.CfnOutput(
+            self, "CloudFrontDistributionId", value=self.distribution.distribution_id,
+            description="CloudFront distribution ID for cache invalidation",
+        )
         cdk.CfnOutput(self, "CloudFrontDomainName", value=self.distribution.distribution_domain_name,
                       description="CloudFront domain (*.cloudfront.net)")
         cdk.CfnOutput(self, "SiteUrl", value=f"https://{domain}",

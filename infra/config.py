@@ -1,6 +1,19 @@
 # ── Domain ───────────────────────────────────────────────────────────────────
 DOMAIN = "jz.io"
 
+# ── AWS account ───────────────────────────────────────────────────────────────
+AWS_ACCOUNT = "919607760751"
+
+# ── Pipeline ──────────────────────────────────────────────────────────────────
+# CodeConnections — pipeline must be in the same region as this connection (us-west-1).
+GITHUB_CONNECTION_ARN = "arn:aws:codeconnections:us-west-1:919607760751:connection/e034a518-cbbd-4271-a32e-fadc6569cf26"
+
+# Looked up from CertStack output (us-east-1). Rarely changes — ACM renews in-place.
+CERT_ARN = "arn:aws:acm:us-east-1:919607760751:certificate/172e5395-ceef-4dd9-81eb-3ebfb16798bc"
+
+# Looked up from DnsStack output. Use `make infra-dns` to redeploy if this ever changes.
+HOSTED_ZONE_ID = "Z07600387P92YR9OHL6L"
+
 # Leave empty for a CDK-generated bucket name, or set a fixed name e.g. "jz.io".
 SITE_BUCKET_NAME = ""
 
