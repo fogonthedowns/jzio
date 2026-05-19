@@ -1,5 +1,5 @@
 import aws_cdk as cdk
-from aws_cdk import pipelines
+from aws_cdk import pipelines, aws_iam as iam
 from constructs import Construct
 
 from stacks.stage_site import SiteStage
@@ -45,7 +45,7 @@ class PipelineStack(cdk.Stack):
         stage = SiteStage(self, "Prod")
 
         # After SiteStack deploys: sync static files and bust the CDN cache.
-        sync_step = pipelines.ShellStep(
+        sync_step = pipelines.CodeBuildStep(
             "SyncSite",
             input=source,
             env_from_cfn_outputs={
@@ -55,6 +55,20 @@ class PipelineStack(cdk.Stack):
             commands=[
                 f'aws s3 sync . "s3://$BUCKET_NAME/" --region us-west-2 --delete {_EXCLUDES}',
                 'aws cloudfront create-invalidation --region us-west-2 --distribution-id "$DIST_ID" --paths "/*"',
+            ],
+            role_policy_statements=[
+                iam.PolicyStatement(
+                    actions=["s3:ListBucket", "s3:GetBucketLocation"],
+                    resources=[stage.site_stack.site_bucket.bucket_arn],
+                ),
+                iam.PolicyStatement(
+                    actions=["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+                    resources=[stage.site_stack.site_bucket.arn_for_objects("*")],
+                ),
+                iam.PolicyStatement(
+                    actions=["cloudfront:CreateInvalidation"],
+                    resources=["*"],
+                ),
             ],
         )
 

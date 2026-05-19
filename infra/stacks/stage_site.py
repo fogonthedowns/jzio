@@ -18,7 +18,7 @@ class SiteStage(cdk.Stage):
         self.site_stack = SiteStack(
             self, "SiteStack",
             stack_name="SiteStack",
-            site_bucket_name=SITE_BUCKET_NAME or None,
+            site_bucket_name=SITE_BUCKET_NAME or cdk.PhysicalName.GENERATE_IF_NEEDED,
             env=cdk.Environment(account=AWS_ACCOUNT, region="us-west-2"),
             cross_region_references=True,
         )
