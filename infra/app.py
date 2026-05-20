@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 import aws_cdk as cdk
 
-from config import AWS_ACCOUNT, DOMAIN, GITHUB_CONNECTION_ARN, SITE_BUCKET_NAME
+from config import AWS_ACCOUNT, DOMAIN, SITE_BUCKET_NAME
 from stacks.stack_cert import CertStack
 from stacks.stack_dns import DnsStack
 from stacks.stack_email import EmailStack
-from stacks.stack_pipeline import PipelineStack
 from stacks.stack_site import SiteStack
 
 app = cdk.App()
@@ -33,10 +32,5 @@ site_stack = SiteStack(
     cross_region_references=True,
 )
 site_stack.add_dependency(cert_stack)
-
-# Self-mutating pipeline: watches master, runs cdk deploy + s3 sync on every push.
-# Pipeline lives in us-west-1 to match the CodeConnections connection region.
-env_west1 = cdk.Environment(account=AWS_ACCOUNT, region="us-west-1")
-PipelineStack(app, "PipelineStack", connection_arn=GITHUB_CONNECTION_ARN, env=env_west1)
 
 app.synth()

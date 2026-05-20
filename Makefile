@@ -1,4 +1,4 @@
-.PHONY: deploy start help infra infra-dns infra-email infra-site infra-bootstrap infra-bootstrap-pipeline infra-pipeline infra-setup infra-synth _venv
+.PHONY: deploy start help infra infra-dns infra-email infra-site infra-bootstrap infra-setup infra-synth _venv
 
 SITE_STACK  ?= SiteStack
 AWS_REGION  := us-west-2
@@ -10,13 +10,11 @@ help:
 	@echo "Targets:"
 	@echo "  infra-setup               create Python venv and install dependencies (run once)"
 	@echo "  infra-bootstrap           cdk bootstrap us-west-2 (run once per account)"
-	@echo "  infra-bootstrap-pipeline  cdk bootstrap both regions with pipeline trust (run once)"
 	@echo "  infra-synth               synthesise all stacks (dry-run)"
 	@echo "  infra-dns                 deploy DnsStack — Route53 hosted zone"
 	@echo "                            copy NameServers output to your registrar before continuing"
 	@echo "  infra-email               deploy EmailStack — FastMail + third-party DNS records"
 	@echo "  infra-site                deploy SiteStack  — cert, S3, CloudFront, apex/www records"
-	@echo "  infra-pipeline            deploy PipelineStack (one-time; pipeline self-mutates after)"
 	@echo "  deploy                    sync ./  to S3 and invalidate CloudFront"
 	@echo "  start                     start local dev server"
 	@echo ""
@@ -36,17 +34,6 @@ infra-bootstrap: _venv
 	@test -n "$(CDK_DEFAULT_ACCOUNT)" || (echo "Set CDK_DEFAULT_ACCOUNT or configure AWS CLI." && exit 1)
 	cd infra && npx cdk bootstrap aws://$(CDK_DEFAULT_ACCOUNT)/$(AWS_REGION)
 
-# Bootstrap pipeline region (us-west-1, matches CodeConnections connection) and
-# deploy region (us-west-2, where SiteStack lives) with pipeline trust.
-infra-bootstrap-pipeline: _venv
-	@test -n "$(CDK_DEFAULT_ACCOUNT)" || (echo "Set CDK_DEFAULT_ACCOUNT or configure AWS CLI." && exit 1)
-	cd infra && npx cdk bootstrap aws://$(CDK_DEFAULT_ACCOUNT)/us-west-1 \
-		--trust $(CDK_DEFAULT_ACCOUNT) \
-		--cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
-	cd infra && npx cdk bootstrap aws://$(CDK_DEFAULT_ACCOUNT)/us-west-2 \
-		--trust $(CDK_DEFAULT_ACCOUNT) \
-		--cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
-
 infra-synth: _venv
 	cd infra && npx cdk synth
 
@@ -65,10 +52,6 @@ infra-site: _venv
 infra: _venv
 	@test -n "$(CDK_DEFAULT_ACCOUNT)" || (echo "Set CDK_DEFAULT_ACCOUNT or configure AWS CLI." && exit 1)
 	cd infra && CDK_DEFAULT_ACCOUNT=$(CDK_DEFAULT_ACCOUNT) npx cdk deploy DnsStack EmailStack CertStack SiteStack --require-approval never
-
-infra-pipeline: _venv
-	@test -n "$(CDK_DEFAULT_ACCOUNT)" || (echo "Set CDK_DEFAULT_ACCOUNT or configure AWS CLI." && exit 1)
-	cd infra && CDK_DEFAULT_ACCOUNT=$(CDK_DEFAULT_ACCOUNT) npx cdk deploy PipelineStack --require-approval never
 
 # ── Site deploy ───────────────────────────────────────────────────────────────
 
