@@ -1,6 +1,8 @@
 # General
 .DS_Store
 
+tags
+
 # Old S3 backup — large media files, not needed in git
 infra/backup/s3-jz.io/
 
