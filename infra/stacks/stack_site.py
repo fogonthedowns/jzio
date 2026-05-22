@@ -45,6 +45,19 @@ class SiteStack(cdk.Stack):
         domain = hosted_zone.zone_name
         www_domain = f"www.{domain}"
 
+        # ── CloudFront access logs bucket ─────────────────────────────────────
+        log_bucket = s3.Bucket(
+            self, "LogBucket",
+            bucket_name="jzio-logs",
+            block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
+            encryption=s3.BucketEncryption.S3_MANAGED,
+            enforce_ssl=True,
+            removal_policy=cdk.RemovalPolicy.RETAIN,
+            auto_delete_objects=False,
+            object_ownership=s3.ObjectOwnership.BUCKET_OWNER_PREFERRED,
+            access_control=s3.BucketAccessControl.LOG_DELIVERY_WRITE,
+        )
+
         # ── S3 bucket ─────────────────────────────────────────────────────────
         self.site_bucket = s3.Bucket(
             self, "SiteBucket",
@@ -87,6 +100,9 @@ class SiteStack(cdk.Stack):
             http_version=cloudfront.HttpVersion.HTTP2_AND_3,
             price_class=cloudfront.PriceClass.PRICE_CLASS_100,
             minimum_protocol_version=cloudfront.SecurityPolicyProtocol.TLS_V1_2_2021,
+            enable_logging=True,
+            log_bucket=log_bucket,
+            log_file_prefix="cf/",
         )
 
         # ── DNS records (apex + www) ──────────────────────────────────────────
@@ -111,3 +127,5 @@ class SiteStack(cdk.Stack):
                       description="CloudFront domain (*.cloudfront.net)")
         cdk.CfnOutput(self, "SiteUrl", value=f"https://{domain}",
                       description="Primary site URL")
+        cdk.CfnOutput(self, "LogBucketName", value=log_bucket.bucket_name,
+                      description="S3 bucket for CloudFront access logs")

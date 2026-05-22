@@ -68,7 +68,13 @@ deploy:
 		--exclude "infra/*" \
 		--exclude ".cursor/*" \
 		--exclude ".gitignore" \
-		--exclude ".arcconfig"; \
+		--exclude ".arcconfig" \
+		--exclude ".config" \
+		--exclude ".DS_Store" \
+		--exclude "*/.DS_Store" \
+		--exclude "Makefile" \
+		--exclude "tags" \
+		--exclude "tags.lock"; \
 	aws cloudfront create-invalidation --region "$(AWS_REGION)" --distribution-id "$$DIST_ID" --paths "/*"
 
 start:
