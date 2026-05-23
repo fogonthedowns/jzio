@@ -1,7 +1,8 @@
-import boto3
 import sys
 
-BUCKET_NAME = 'jzio-logs'
+import boto3
+
+from config import LOG_BUCKET_NAME as BUCKET_NAME
 PREFIX = 'cf/'
 
 def format_log_entry(date, time, method, path, status, result, bytes_sent, ip):

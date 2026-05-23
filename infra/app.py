@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import aws_cdk as cdk
 
-from config import AWS_ACCOUNT, DOMAIN, SITE_BUCKET_NAME
+from config import AWS_ACCOUNT, DOMAIN, LOG_BUCKET_NAME, SITE_BUCKET_NAME
 from stacks.stack_cert import CertStack
 from stacks.stack_dns import DnsStack
 from stacks.stack_email import EmailStack
@@ -28,6 +28,7 @@ site_stack = SiteStack(
     hosted_zone=dns_stack.hosted_zone,
     certificate=cert_stack.certificate,
     site_bucket_name=SITE_BUCKET_NAME or None,
+    log_bucket_name=LOG_BUCKET_NAME or None,
     env=env_west,
     cross_region_references=True,
 )

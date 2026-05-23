@@ -25,6 +25,7 @@ class SiteStack(cdk.Stack):
         hosted_zone: route53.IHostedZone,
         certificate: acm.ICertificate,
         site_bucket_name: Optional[str] = None,
+        log_bucket_name: Optional[str] = None,
         **kwargs,
     ):
         super().__init__(scope, id, **kwargs)
@@ -35,7 +36,7 @@ class SiteStack(cdk.Stack):
         # ── CloudFront access logs bucket ─────────────────────────────────────
         log_bucket = s3.Bucket(
             self, "LogBucket",
-            bucket_name="jzio-logs",
+            bucket_name=log_bucket_name or None,
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             encryption=s3.BucketEncryption.S3_MANAGED,
             enforce_ssl=True,

@@ -7,6 +7,8 @@ AWS_ACCOUNT = "919607760751"
 # Leave empty for a CDK-generated bucket name, or set a fixed name e.g. "jz.io".
 SITE_BUCKET_NAME = ""
 
+LOG_BUCKET_NAME = "jzio-logs"
+
 # ── DNS TTL (seconds) ─────────────────────────────────────────────────────────
 TTL = 300
 
