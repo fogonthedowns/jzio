@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional  # Optional retained for site_bucket_name
 
 import aws_cdk as cdk
 import aws_cdk.aws_athena as athena
@@ -16,33 +16,18 @@ class SiteStack(cdk.Stack):
     """S3 bucket, CloudFront distribution, and site DNS records — deployed to us-west-2.
 
     Certificate lives in CertStack (us-east-1) because CloudFront requires it there.
-
-    When called from the pipeline, hosted_zone and certificate are omitted and
-    imported by reference using HOSTED_ZONE_ID / CERT_ARN from config.py.
-    When called from app.py for manual deploys, pass the live CDK objects.
     """
 
     def __init__(
         self,
         scope: Construct,
         id: str,
-        hosted_zone: Optional[route53.IHostedZone] = None,
-        certificate: Optional[acm.ICertificate] = None,
+        hosted_zone: route53.IHostedZone,
+        certificate: acm.ICertificate,
         site_bucket_name: Optional[str] = None,
         **kwargs,
     ):
         super().__init__(scope, id, **kwargs)
-
-        if hosted_zone is None:
-            from config import DOMAIN, HOSTED_ZONE_ID
-            hosted_zone = route53.HostedZone.from_hosted_zone_attributes(
-                self, "ImportedZone",
-                hosted_zone_id=HOSTED_ZONE_ID,
-                zone_name=DOMAIN,
-            )
-        if certificate is None:
-            from config import CERT_ARN
-            certificate = acm.Certificate.from_certificate_arn(self, "ImportedCert", CERT_ARN)
 
         domain = hosted_zone.zone_name
         www_domain = f"www.{domain}"

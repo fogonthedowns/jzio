@@ -1,516 +1,625 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What's my home worth?</title>
-  <!-- Primary Meta Tags -->
-  <meta name="description" content="Calculate what your home is really worth in today's interest rate environment. Compare your perceived home value with current market reality.">
-  <meta name="keywords" content="home value calculator, mortgage rates, real estate, housing market, interest rates, home price calculator">
-  <meta name="author" content="Home Value Reality Check">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:title" content="What's my home worth?">
-  <meta property="og:description" content="Calculate the reality of your home's value with current market rates. See what your monthly payment would cost at today's rates.">
-  <meta property="og:image" content="https://jz.io/darth.jpg">
-  <meta property="og:image:alt" content="Home price reality check calculator interface">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://jz.io/darth.html">
-  <meta property="og:site_name" content="Home Value Reality Check">
-  
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@VladTheInflator">
-  <meta name="twitter:creator" content="@VladTheInflator">
-  <meta name="twitter:title" content="What's my home worth? 🏠">
-  <meta name="twitter:description" content="Calculate what your home is really worth in today's interest rate environment. See the gap between perception and reality! 📊">
-  <meta name="twitter:image" content="https://jz.io/darth.jpg">
-  <meta name="twitter:image:alt" content="Interactive calculator showing home value reality check">
-  
-  <!-- Additional Meta Tags -->
-  <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
-  <meta name="revisit-after" content="7 days">
-  <meta name="theme-color" content="#1E40AF">
-  
-  <!-- Schema.org structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Baby Boomer's Home Price Reality Check",
-    "description": "Calculate what your home is really worth in today's interest rate environment",
-    "url": "https://jz.io/darth.html",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "Web Browser",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "creator": {
-      "@type": "Person",
-      "name": "Darth Powell"
-    }
-  }
-  </script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-color: #1E40AF; /* Deep blue for trust */
-      --secondary-color: #10B981; /* Green for positive results */
-      --error-color: #EF4444; /* Red for negative results or gap */
-      --text-color: #1F2937; /* Dark gray for readability */
-      --background-color: #F9FAFB; /* Light neutral background */
-      --card-background: #FFFFFF; /* White for cards */
-      --border-radius: 8px;
-      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      --transition: all 0.2s ease-in-out;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What's my home worth?</title>
+    <!-- Primary Meta Tags -->
+    <meta
+      name="description"
+      content="Calculate what your home is really worth in today's interest rate environment. Compare your perceived home value with current market reality."
+    />
+    <meta
+      name="keywords"
+      content="home value calculator, mortgage rates, real estate, housing market, interest rates, home price calculator"
+    />
+    <meta name="author" content="Home Value Reality Check" />
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="What's my home worth?" />
+    <meta
+      property="og:description"
+      content="Calculate the reality of your home's value with current market rates. See what your monthly payment would cost at today's rates."
+    />
+    <meta property="og:image" content="https://jz.io/darth.jpg" />
+    <meta
+      property="og:image:alt"
+      content="Home price reality check calculator interface"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jz.io/darth.html" />
+    <meta property="og:site_name" content="Home Value Reality Check" />
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--background-color);
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@VladTheInflator" />
+    <meta name="twitter:creator" content="@VladTheInflator" />
+    <meta name="twitter:title" content="What's my home worth? 🏠" />
+    <meta
+      name="twitter:description"
+      content="Calculate what your home is really worth in today's interest rate environment. See the gap between perception and reality! 📊"
+    />
+    <meta name="twitter:image" content="https://jz.io/darth.jpg" />
+    <meta
+      name="twitter:image:alt"
+      content="Interactive calculator showing home value reality check"
+    />
 
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      color: var(--text-color);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding: 1rem;
-    }
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="theme-color" content="#1E40AF" />
 
-    header {
-      text-align: center;
-      margin: 2rem 0;
-    }
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Baby Boomer's Home Price Reality Check",
+        "description": "Calculate what your home is really worth in today's interest rate environment",
+        "url": "https://jz.io/darth.html",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "Darth Powell"
+        }
+      }
+    </script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #1e40af; /* Deep blue for trust */
+        --secondary-color: #10b981; /* Green for positive results */
+        --error-color: #ef4444; /* Red for negative results or gap */
+        --text-color: #1f2937; /* Dark gray for readability */
+        --background-color: #f9fafb; /* Light neutral background */
+        --card-background: #ffffff; /* White for cards */
+        --border-radius: 8px;
+        --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        --transition: all 0.2s ease-in-out;
+      }
 
-    h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--primary-color);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    .container {
-      max-width: 1200px;
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      justify-content: center;
-    }
+      body {
+        font-family: "Inter", sans-serif;
+        background: var(--background-color);
 
-    .card, .result-card {
-      background: var(--card-background);
-      padding: 1.5rem;
-      border-radius: var(--border-radius);
-      box-shadow: var(--box-shadow);
-      flex: 1;
-      min-width: 300px;
-      max-width: 400px;
-      transition: var(--transition);
-    }
-
-    .card:hover, .result-card:hover {
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
-    }
-
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
-
-    label {
-      font-size: 0.875rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: var(--text-color);
-    }
-
-    input {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #D1D5DB;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-family: 'Inter', sans-serif;
-      transition: var(--transition);
-    }
-
-    input:focus {
-      border-color: var(--primary-color);
-      box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
-      outline: none;
-    }
-
-    input:invalid:focus {
-      border-color: var(--error-color);
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
-    }
-
-    .form-text {
-      font-size: 0.75rem;
-      color: #6B7280;
-      margin-top: 0.25rem;
-      display: block;
-    }
-
-    button {
-      width: 100%;
-      padding: 0.875rem;
-      background: var(--primary-color);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    button:hover {
-      background: #1E3A8A;
-      transform: translateY(-1px);
-    }
-
-    button:active {
-      transform: translateY(0);
-    }
-
-    .result-card {
-      background: linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%);
-      display: none; /* Hidden until calculate is pressed */
-      opacity: 0;
-      transform: scale(0.95);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-
-    .result-card.visible {
-      display: block;
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .result-details {
-      margin-bottom: 1rem;
-    }
-
-    .result-details h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-color);
-      margin-bottom: 1rem;
-    }
-
-    .result-details p {
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 0.75rem;
-    }
-
-    .sticker-price {
-      background: #ECFDF5;
-      padding: 1.5rem;
-      border-radius: 6px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .sticker-price h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--secondary-color);
-      margin-bottom: 0.5rem;
-    }
-
-    .sticker-price .price {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--secondary-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .reality-check-box {
-      background: #ECFDF5;
-      padding: 1.5rem;
-      border-radius: 6px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      margin-top: 1rem;
-    }
-
-    .reality-check-box h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--secondary-color);
-      margin-bottom: 0.5rem;
-    }
-
-    .reality-check-box .price {
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--secondary-color);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .reality-message {
-      background: #FEE2E2;
-      border: 2px solid var(--error-color);
-      padding: 0.75rem;
-      border-radius: 6px;
-      margin-top: 0.5rem;
-      color: var(--error-color);
-      font-weight: 600;
-    }
-
-    .highlight-green {
-      color: var(--secondary-color);
-      font-weight: 600;
-    }
-
-    .highlight-red {
-      color: var(--error-color);
-      font-weight: 700;
-      font-size: 1.25rem;
-    }
-
-    .gap-highlight {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--error-color);
-      background: #FEE2E2;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      margin-top: 1rem;
-      display: block;
-    }
-
-    @media (max-width: 900px) {
-      .container {
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: var(--text-color);
+        display: flex;
         flex-direction: column;
         align-items: center;
-      }
-
-      .card, .result-card {
-        max-width: 100%;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 0 1rem;
-      }
-
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .card, .result-card {
+        min-height: 100vh;
         padding: 1rem;
       }
 
+      header {
+        text-align: center;
+        margin: 2rem 0;
+      }
+
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+      }
+
+      .card,
+      .result-card {
+        background: var(--card-background);
+        padding: 1.5rem;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px;
+        transition: var(--transition);
+      }
+
+      .card:hover,
+      .result-card:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+
+      label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: "Inter", sans-serif;
+        transition: var(--transition);
+      }
+
+      input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        outline: none;
+      }
+
+      input:invalid:focus {
+        border-color: var(--error-color);
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+
+      .form-text {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin-top: 0.25rem;
+        display: block;
+      }
+
+      button {
+        width: 100%;
+        padding: 0.875rem;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      button:hover {
+        background: #1e3a8a;
+        transform: translateY(-1px);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .result-card {
+        background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+        display: none; /* Hidden until calculate is pressed */
+        opacity: 0;
+        transform: scale(0.95);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+      }
+
+      .result-card.visible {
+        display: block;
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .result-details {
+        margin-bottom: 1rem;
+      }
+
       .result-details h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 1rem;
+      }
+
+      .result-details p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+      }
+
+      .sticker-price {
+        background: #ecfdf5;
+        padding: 1.5rem;
+        border-radius: 6px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .sticker-price h3 {
         font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+        margin-bottom: 0.5rem;
       }
 
       .sticker-price .price {
-        font-size: 1.75rem;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
       }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1><span>🏠</span> What's my home worth?</h1>
-    <span>Inspired by <a href="https://x.com/VladTheInflator/status/1962186303497486545">Darth Powell</a></span>
-  </header>
 
-  <div class="container">
-    <div class="card">
-      <form id="calculatorForm">
-        <div class="form-group">
-          <label for="myRate">My Mortgage Rate (%)</label>
-          <input id="myRate" type="number" value="2.5" step="0.01" min="0" required aria-describedby="myRateDesc">
-          <small id="myRateDesc" class="form-text">Your previous mortgage interest rate.</small>
-        </div>
+      .reality-check-box {
+        background: #ecfdf5;
+        padding: 1.5rem;
+        border-radius: 6px;
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+      }
 
-        <div class="form-group">
-          <label for="myPayment">Current Monthly Payment ($)</label>
-          <input id="myPayment" type="text" value="3,200" step="1" min="0" required aria-describedby="myPaymentDesc">
-          <small id="myPaymentDesc" class="form-text">Your current monthly mortgage payment.</small>
-        </div>
+      .reality-check-box h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+        margin-bottom: 0.5rem;
+      }
 
-        <div class="form-group">
-          <label for="currentRate">Current Market Rate (%)</label>
-          <input id="currentRate" type="number" value="6.5" step="0.01" min="0" required aria-describedby="currentRateDesc">
-          <small id="currentRateDesc" class="form-text">The current market interest rate.</small>
-        </div>
+      .reality-check-box .price {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
 
-        <div class="form-group">
-          <label for="perceivedValue">I Think My House Is Worth ($) - Optional</label>
-          <input id="perceivedValue" type="text" value="" step="1" min="0" aria-describedby="perceivedValueDesc">
-          <small id="perceivedValueDesc" class="form-text">Your estimated value of your home (optional comparison).</small>
-        </div>
+      .reality-message {
+        background: #fee2e2;
+        border: 2px solid var(--error-color);
+        padding: 0.75rem;
+        border-radius: 6px;
+        margin-top: 0.5rem;
+        color: var(--error-color);
+        font-weight: 600;
+      }
 
-        <div class="form-group">
-          <label for="downPaymentPercent">Down Payment (%)</label>
-          <input id="downPaymentPercent" type="number" value="20" step="0.1" min="0" max="100" required aria-describedby="downPaymentDesc">
-          <small id="downPaymentDesc" class="form-text">Down payment percentage when you bought.</small>
-        </div>
+      .highlight-green {
+        color: var(--secondary-color);
+        font-weight: 600;
+      }
 
-        <div class="form-group">
-          <label for="cpi">CPI Adjustment (% - Optional)</label>
-          <input id="cpi" type="number" value="0" step="0.1" min="0" aria-describedby="cpiDesc">
-          <small id="cpiDesc" class="form-text">Adjust for inflation using CPI percentage.</small>
-        </div>
+      .highlight-red {
+        color: var(--error-color);
+        font-weight: 700;
+        font-size: 1.25rem;
+      }
 
-        <button type="button" onclick="calculate()">Calculate</button>
-      </form>
+      .gap-highlight {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--error-color);
+        background: #fee2e2;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        margin-top: 1rem;
+        display: block;
+      }
+
+      @media (max-width: 900px) {
+        .container {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .card,
+        .result-card {
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 0 1rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        .card,
+        .result-card {
+          padding: 1rem;
+        }
+
+        .result-details h2 {
+          font-size: 1.25rem;
+        }
+
+        .sticker-price .price {
+          font-size: 1.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1><span>🏠</span> What's my home worth?</h1>
+      <span
+        >Inspired by
+        <a href="https://x.com/VladTheInflator/status/1962186303497486545"
+          >Darth Powell</a
+        ></span
+      >
+    </header>
+
+    <div class="container">
+      <div class="card">
+        <form id="calculatorForm">
+          <div class="form-group">
+            <label for="myRate">My Mortgage Rate (%)</label>
+            <input
+              id="myRate"
+              type="number"
+              value="2.5"
+              step="0.01"
+              min="0"
+              required
+              aria-describedby="myRateDesc"
+            />
+            <small id="myRateDesc" class="form-text"
+              >Your previous mortgage interest rate.</small
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="myPayment">Current Monthly Payment ($)</label>
+            <input
+              id="myPayment"
+              type="text"
+              value="3,200"
+              step="1"
+              min="0"
+              required
+              aria-describedby="myPaymentDesc"
+            />
+            <small id="myPaymentDesc" class="form-text"
+              >Your current monthly mortgage payment.</small
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="currentRate">Current Market Rate (%)</label>
+            <input
+              id="currentRate"
+              type="number"
+              value="6.5"
+              step="0.01"
+              min="0"
+              required
+              aria-describedby="currentRateDesc"
+            />
+            <small id="currentRateDesc" class="form-text"
+              >The current market interest rate.</small
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="perceivedValue"
+              >I Think My House Is Worth ($) - Optional</label
+            >
+            <input
+              id="perceivedValue"
+              type="text"
+              value=""
+              step="1"
+              min="0"
+              aria-describedby="perceivedValueDesc"
+            />
+            <small id="perceivedValueDesc" class="form-text"
+              >Your estimated value of your home (optional comparison).</small
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="downPaymentPercent">Down Payment (%)</label>
+            <input
+              id="downPaymentPercent"
+              type="number"
+              value="20"
+              step="0.1"
+              min="0"
+              max="100"
+              required
+              aria-describedby="downPaymentDesc"
+            />
+            <small id="downPaymentDesc" class="form-text"
+              >Down payment percentage when you bought.</small
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="cpi">CPI Adjustment (% - Optional)</label>
+            <input
+              id="cpi"
+              type="number"
+              value="0"
+              step="0.1"
+              min="0"
+              aria-describedby="cpiDesc"
+            />
+            <small id="cpiDesc" class="form-text"
+              >Adjust for inflation using CPI percentage.</small
+            >
+          </div>
+
+          <button type="button" onclick="calculate()">Calculate</button>
+        </form>
+      </div>
+
+      <div class="result-card" id="result"></div>
     </div>
 
-    <div class="result-card" id="result"></div>
-  </div>
-
-  <script>
-    function monthlyPayment(principal, rate, years = 30) {
-      let r = rate / 100 / 12;
-      let n = years * 12;
-      return principal * r / (1 - Math.pow(1 + r, -n));
-    }
-
-    function principalFromPayment(payment, rate, years = 30) {
-      let r = rate / 100 / 12;
-      let n = years * 12;
-      return payment * (1 - Math.pow(1 + r, -n)) / r;
-    }
-
-    function formatNumberWithCommas(num) {
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    function removeCommas(str) {
-      return str.replace(/,/g, "");
-    }
-
-    function formatInput(input) {
-      let value = removeCommas(input.value);
-      if (value && !isNaN(value)) {
-        input.value = formatNumberWithCommas(value);
+    <script>
+      function monthlyPayment(principal, rate, years = 30) {
+        let r = rate / 100 / 12;
+        let n = years * 12;
+        return (principal * r) / (1 - Math.pow(1 + r, -n));
       }
-    }
 
-    function setupInputFormatting() {
-      const numberInputs = ['myPayment', 'perceivedValue'];
-      
-      numberInputs.forEach(id => {
-        const input = document.getElementById(id);
-        if (input) {
-          // Format on blur (when user leaves the field)
-          input.addEventListener('blur', function() {
-            formatInput(this);
-          });
-          
-          // Remove commas on focus (when user clicks into the field)
-          input.addEventListener('focus', function() {
-            this.value = removeCommas(this.value);
-          });
-          
-          // Format initial values if they exist
-          if (input.value) {
-            formatInput(input);
-          }
+      function principalFromPayment(payment, rate, years = 30) {
+        let r = rate / 100 / 12;
+        let n = years * 12;
+        return (payment * (1 - Math.pow(1 + r, -n))) / r;
+      }
+
+      function formatNumberWithCommas(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
+      function removeCommas(str) {
+        return str.replace(/,/g, "");
+      }
+
+      function formatInput(input) {
+        let value = removeCommas(input.value);
+        if (value && !isNaN(value)) {
+          input.value = formatNumberWithCommas(value);
         }
-      });
-    }
-
-    // Initialize formatting when page loads
-    document.addEventListener('DOMContentLoaded', setupInputFormatting);
-
-    function calculate() {
-      let myRate = parseFloat(document.getElementById("myRate").value);
-      let myPayment = parseFloat(removeCommas(document.getElementById("myPayment").value));
-      let currentRate = parseFloat(document.getElementById("currentRate").value);
-      let downPaymentPercent = parseFloat(document.getElementById("downPaymentPercent").value);
-      let perceivedValueInput = document.getElementById("perceivedValue").value;
-      let perceivedValue = perceivedValueInput ? parseFloat(removeCommas(perceivedValueInput)) : null;
-      let cpi = parseFloat(document.getElementById("cpi").value) || 0;
-
-      if (isNaN(myRate) || isNaN(myPayment) || isNaN(currentRate) || isNaN(downPaymentPercent)) {
-        alert("Please fill in all required fields with valid numbers.");
-        return;
       }
 
-      // Calculate the original loan amount from the payment
-      let originalLoanAmount = principalFromPayment(myPayment, myRate);
-      
-      // Calculate the original home value (loan + down payment)
-      let loanToValue = (100 - downPaymentPercent) / 100;
-      let originalHomeValue = originalLoanAmount / loanToValue;
-      
-      // Calculate what the payment would be at current rates (no CPI here)
-      let newPayment = monthlyPayment(originalLoanAmount, currentRate);
-      
-      // Calculate what the same home is worth at current rates (reality check)
-      let currentHomeValue = principalFromPayment(myPayment, currentRate) / loanToValue;
-      
-      // Apply CPI adjustment to the CURRENT/REALITY home value
-      if (cpi > 0) {
-        currentHomeValue *= (1 + cpi / 100);
+      function setupInputFormatting() {
+        const numberInputs = ["myPayment", "perceivedValue"];
+
+        numberInputs.forEach((id) => {
+          const input = document.getElementById(id);
+          if (input) {
+            // Format on blur (when user leaves the field)
+            input.addEventListener("blur", function () {
+              formatInput(this);
+            });
+
+            // Remove commas on focus (when user clicks into the field)
+            input.addEventListener("focus", function () {
+              this.value = removeCommas(this.value);
+            });
+
+            // Format initial values if they exist
+            if (input.value) {
+              formatInput(input);
+            }
+          }
+        });
       }
 
-      let resultHTML = `
+      // Initialize formatting when page loads
+      document.addEventListener("DOMContentLoaded", setupInputFormatting);
+
+      function calculate() {
+        let myRate = parseFloat(document.getElementById("myRate").value);
+        let myPayment = parseFloat(
+          removeCommas(document.getElementById("myPayment").value),
+        );
+        let currentRate = parseFloat(
+          document.getElementById("currentRate").value,
+        );
+        let downPaymentPercent = parseFloat(
+          document.getElementById("downPaymentPercent").value,
+        );
+        let perceivedValueInput =
+          document.getElementById("perceivedValue").value;
+        let perceivedValue = perceivedValueInput
+          ? parseFloat(removeCommas(perceivedValueInput))
+          : null;
+        let cpi = parseFloat(document.getElementById("cpi").value) || 0;
+
+        if (
+          isNaN(myRate) ||
+          isNaN(myPayment) ||
+          isNaN(currentRate) ||
+          isNaN(downPaymentPercent)
+        ) {
+          alert("Please fill in all required fields with valid numbers.");
+          return;
+        }
+
+        // Calculate the original loan amount from the payment
+        let originalLoanAmount = principalFromPayment(myPayment, myRate);
+
+        // Calculate the original home value (loan + down payment)
+        let loanToValue = (100 - downPaymentPercent) / 100;
+        let originalHomeValue = originalLoanAmount / loanToValue;
+
+        // Calculate what the payment would be at current rates (no CPI here)
+        let newPayment = monthlyPayment(originalLoanAmount, currentRate);
+
+        // Calculate what the same home is worth at current rates (reality check)
+        let currentHomeValue =
+          principalFromPayment(myPayment, currentRate) / loanToValue;
+
+        // Apply CPI adjustment to the CURRENT/REALITY home value
+        if (cpi > 0) {
+          currentHomeValue *= 1 + cpi / 100;
+        }
+
+        let resultHTML = `
         <div class="result-details">
           <h2>Interest Rate Reality Check</h2>
           <p>Your <span class="highlight-green">$${myPayment.toLocaleString()}/mo</span> payment at ${myRate}% financed a <span class="highlight-green">$${originalLoanAmount.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span> loan.</p>
           <p>With ${downPaymentPercent}% down, that was a $${originalHomeValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} home.</p>
           <p>At ${currentRate}% rates, that same home would cost <span class="highlight-red">$${newPayment.toLocaleString(undefined, { maximumFractionDigits: 0 })}/mo</span>.</p>`;
 
-      resultHTML += `
+        resultHTML += `
           <div class="reality-check-box">
             <h3>Current Home Value Reality</h3>
             <div class="price">$${currentHomeValue.toLocaleString(undefined, { maximumFractionDigits: 0 })} 🏷️ </div>
-            <small>What your home is worth at ${currentRate}% rates${cpi > 0 ? ` (adjusted for ${cpi}% inflation)` : ''}</small>
+            <small>What your home is worth at ${currentRate}% rates${cpi > 0 ? ` (adjusted for ${cpi}% inflation)` : ""}</small>
           </div>`;
 
-      if (perceivedValue !== null) {
-        let valueGap = perceivedValue - currentHomeValue;
-        let gapText = valueGap >= 0 
-          ? `Your estimate is $${Math.abs(valueGap).toLocaleString(undefined, { maximumFractionDigits: 0 })} higher than current market reality.`
-          : `Your estimate is $${Math.abs(valueGap).toLocaleString(undefined, { maximumFractionDigits: 0 })} lower than current market reality.`;
-        
-        resultHTML += `
+        if (perceivedValue !== null) {
+          let valueGap = perceivedValue - currentHomeValue;
+          let gapText =
+            valueGap >= 0
+              ? `Your estimate is $${Math.abs(valueGap).toLocaleString(undefined, { maximumFractionDigits: 0 })} higher than current market reality.`
+              : `Your estimate is $${Math.abs(valueGap).toLocaleString(undefined, { maximumFractionDigits: 0 })} lower than current market reality.`;
+
+          resultHTML += `
             <div class="reality-message" style="margin-top: 1rem;">
               You think your home is worth $${perceivedValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}.<br>
               ${gapText}
             </div>`;
-      }
+        }
 
-      resultHTML += `
+        resultHTML += `
         </div>
       `;
 
-      document.getElementById("result").innerHTML = resultHTML;
-      const resultDiv = document.getElementById("result");
-      resultDiv.classList.add("visible");
-    }
-  </script>
-</body>
+        document.getElementById("result").innerHTML = resultHTML;
+        const resultDiv = document.getElementById("result");
+        resultDiv.classList.add("visible");
+      }
+    </script>
+  </body>
 </html>

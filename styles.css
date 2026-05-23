@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   overflow-x: hidden;
 }
 
@@ -31,13 +32,12 @@ a {
   li {
     margin-bottom: 8px;
   }
-
 }
 
 .colored {
-  background-color: #ffcc33
+  background-color: #ffcc33;
 }
 
 .otro {
-   background-color: #ff9922
+  background-color: #ff9922;
 }
